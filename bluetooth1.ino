@@ -34,15 +34,13 @@ void setup() {
     hc08.write("AT+AINT=800");
     delay(250);
 
-    if (!pox.begin()) {
-        Serial.println("ERROR: Failed to initialize pulse oximeter");
-        for(;;);
-    } else {
-        Serial.println("Initialized pulse oximeter");
+    while (true) {
+        if (pox.begin()) break;
+        delay(1000);
     }
+    Serial.println("Initialized pulse oximeter");
 
     pox.setOnBeatDetectedCallback(onBeatDetected);
-
 }
 
 void delayWithPoxUpdate(int target_wait) {
